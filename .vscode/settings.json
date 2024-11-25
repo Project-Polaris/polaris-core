@@ -1,0 +1,6 @@
+{
+    "phpstan.showTypeOnHover": false,
+    "phpstan.memoryLimit": "2G",
+    "phpstan.showProgress": true,
+    "phpstan.checkValidity": true
+}

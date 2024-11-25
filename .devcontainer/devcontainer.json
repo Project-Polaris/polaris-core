@@ -1,0 +1,31 @@
+// https://aka.ms/devcontainer.json
+{
+	"name": "Existing Docker Compose (Extend)",
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+	"service": "laravel",
+	"workspaceFolder": "/var/www/html",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"mikestead.dotenv",
+				"amiralizadeh9480.laravel-extra-intellisense",
+				"ryannaddy.laravel-artisan",
+				"onecentlin.laravel5-snippets",
+				"onecentlin.laravel-blade",
+				"ms-azuretools.vscode-docker",
+				"SanderRonde.phpstan-vscode",
+				"bmewburn.vscode-intelephense-client",
+				"porifa.laravel-intelephense",
+				"muath-ye.composer-Intelephense",
+				"xdebug.php-debug"
+			],
+			"settings": {}
+		}
+	},
+	"remoteUser": "root"
+	// "forwardPorts": [],
+	// "runServices": [],
+	// "shutdownAction": "none",
+}
