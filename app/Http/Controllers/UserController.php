@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequestV1;
-use App\Http\Requests\UpdateUserRequestV1;
+use App\Http\Requests\User\StoreUserRequestV1;
+use App\Http\Requests\User\UpdateUserRequestV1;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -39,11 +39,11 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update_v1(UpdateUserRequestV1 $request, User $user): HttpResponse
+    public function update_v1(UpdateUserRequestV1 $request, User $user): UserResource
     {
-        return $user->update($request->validated()) ? 
-            Response::noContent() :
-            Response::noContent(409);
+        $user->update($request->validated());
+
+        return new UserResource($user);
     }
 
     /**
