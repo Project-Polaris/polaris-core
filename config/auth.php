@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'api'),
+        'guard' => env('AUTH_GUARD', 'web'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
@@ -36,63 +36,9 @@ return [
     */
 
     'guards' => [
-        'api' => [
-            'driver' => 'jwt',
+        'web' => [
+            'driver' => 'session',
             'provider' => 'users',
-
-            /*
-            |--------------------------------------------------------------------------
-            | Algorithm
-            |--------------------------------------------------------------------------
-            |
-            | Algorithm used to sign new JWTs. 
-            |
-            | Supported: HS256, HS384, HS512, RS256, RS384, RS512, ES256, ES256K,
-            |            ES384, EdDSA
-            | See also: https://github.com/firebase/php-jwt/blob/main/src/JWT.php#L55
-            |
-            */
-
-            'alg' => env("AUTH_API_JWT_ALGORITHM", "EdDSA"),
-
-            /*
-            |--------------------------------------------------------------------------
-            | Keys
-            |--------------------------------------------------------------------------
-            |
-            | A list of all keys used to sign the JWT. 
-            | All previous used keys are needed to listed here, to preserve backward
-            | compatibility.
-            |
-            | By default, keys are indexed by the xxh64 hash of the public key.
-            |
-            | TODO: Theoretically it is possible to accept JWK here. 
-            | TODO: Only the public portion of previous keys need to be listed here.
-            |       Find a way to trim down the processing phase.
-            |
-            */
-
-            'keys' => [
-                ...collect(explode(',', env('AUTH_API_JWT_KEYS_ED25519', '')))
-                ->filter()
-                ->mapWithKeys(function ($item) {
-                    $private_key = base64_decode($item);
-                    $public_key = sodium_crypto_sign_publickey_from_secretkey($private_key);
-                    $kid = rtrim(strtr(base64_encode(hash('xxh64', $public_key, true)), '+/', '-_'), '=');
-
-                    return [
-                        $kid => [
-                            'type' => 'EdDSA',
-                            'public' => base64_encode($public_key),
-                            'private' => base64_encode($private_key),
-                        ],
-                    ];
-                })
-                ->toArray(),
-            ],
-
-            'current_key' => env('AUTH_API_JWT_CURRENT_KEY', 'default'),
-
         ],
     ],
 

@@ -9,11 +9,11 @@ Route::get('/v1/users/', [UserController::class, 'index_v1'])
     ->can('viewAny', User::class);
 
 Route::post('/v1/users/', [UserController::class, 'store_v1'])
-    ->name('post.v1')
+    ->name('create.v1')
     ->can('create', User::class);
 
 Route::get('/v1/users/{user}', [UserController::class, 'show_v1'])
-    ->name('get.v1')
+    ->name('view.v1')
     ->can('view', 'user');
 
 Route::put('/v1/users/{user}', [UserController::class, 'update_v1'])

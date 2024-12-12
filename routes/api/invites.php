@@ -5,15 +5,15 @@ use App\Models\Invite;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/v1/invites/', [InviteController::class, 'index_v1'])
-    ->name('index.v1')
+    ->name('viewAny.v1')
     ->can('viewAny', Invite::class);
 
 Route::post('/v1/invites/', [InviteController::class, 'store_v1'])
-    ->name('post.v1')
+    ->name('create.v1')
     ->can('create', Invite::class);
 
 Route::get('/v1/invites/{invite}', [InviteController::class, 'show_v1'])
-    ->name('get.v1')
+    ->name('view.v1')
     ->can('view', 'invite');
 
 Route::put('/v1/invites/{invite}', [InviteController::class, 'update_v1'])

@@ -2,6 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::name('auth.')->group(base_path('routes/api/auth.php'));
-Route::name('user.')->group(base_path('routes/api/user.php'));
-Route::name('invite.')->group(base_path('routes/api/invite.php'));
+Route::name('users.')->group(base_path('routes/api/users.php'));
+Route::name('invites.')->group(base_path('routes/api/invites.php'));
+Route::name('nodes.')->group(base_path('routes/api/nodes.php'));

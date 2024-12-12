@@ -14,6 +14,7 @@ class NodeGroupResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // @phpstan-ignore return.type
         return parent::toArray($request);
     }
 }

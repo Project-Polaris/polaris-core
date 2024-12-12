@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Authentication\LoginV1;
 use App\Http\Requests\Authentication\RegisterV1;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Auth\AuthenticationException;
@@ -17,7 +18,7 @@ class Authentication extends Controller {
         protected AuthFactory $auth,
         protected UserRepository $userRepository,
     ) { }
-
+    
     public function login_v1(LoginV1 $request): JsonResponse {
         /** @var \Illuminate\Contracts\Auth\StatefulGuard */
         $guard = $this->auth->guard();
@@ -28,28 +29,32 @@ class Authentication extends Controller {
         ]);
 
         if (!$loggedIn) {
-            throw new AuthenticationException;
+            return response()->json([
+                'message' => 'Invalid credentials',
+            ], 401);
         }
 
-        /** @var \App\Models\User $user */
+        $request->session()->regenerate();
+
         $user = $guard->user();
 
         $response = [
-            'token' => $user->createToken(),
-            'user' => $user,
+            'user' => new UserResource($user),
         ];
 
         return response()->json($response);
     }
 
     public function register_v1(RegisterV1 $request): JsonResponse {
+        // TODO captcha
+
         $user = $this->userRepository->create(
-            $request->email, $request->password
+            $request->email,
+            $request->password
         );
 
         $response = [
-            'token' => $user->createToken(),
-            'user' => $user,
+            'user' => new UserResource($user),
         ];
 
         return response()->json($response);

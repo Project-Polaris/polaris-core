@@ -63,4 +63,19 @@ class TrafficLogPolicy
     {
         return $user->admin;
     }
+
+    /**
+     * Perform pre-authorization checks.
+     */
+    public function before(User $user, string $ability): bool|null {
+        if (!$user->active) {
+            return false;
+        }
+
+        if ($user->admin) {
+            return true;
+        }
+
+        return null;
+    }
 }
